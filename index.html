@@ -128,7 +128,6 @@
 
     h1 { font-size: 3.8rem; margin-bottom: 15px; line-height: 1.1; }
     
-    /* --- FIX 1: Added background-clip to silence VS Code warning --- */
     .gradient-text { 
         background: var(--gradient-text); 
         -webkit-background-clip: text; 
@@ -313,12 +312,16 @@
         </p>
         <div class="cta-buttons">
           <a href="#projects" class="btn btn-primary" data-i18n="btn_portfolio">View Projects</a>
-          <a href="#" class="btn btn-outline" data-i18n="btn_resume"><i class="fas fa-download"></i> Resume</a>
+          
+          <!-- FIXED: Opens CV in a new Tab -->
+          <a href="rkarim_mache_cv.pdf" class="btn btn-outline" target="_blank" rel="noopener noreferrer" data-i18n="btn_resume">
+            <i class="fas fa-download"></i> Resume
+          </a>
+          
         </div>
       </div>
       
       <div class="hero-img">
-        <!-- FIX 2: Correct image path set to your local file -->
         <img src="images/photo.png" alt="Ramiyou Karim" class="profile-pic">
       </div>
     </div>
@@ -556,9 +559,7 @@
     }
 
     function type() {
-      // Safety check if array index is out of bounds after language switch
       if (textArrayIndex >= textArray.length) textArrayIndex = 0;
-      
       if (charIndex < textArray[textArrayIndex].length) {
         typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
         charIndex++;
@@ -591,27 +592,19 @@
             btn.classList.remove('active');
             if(btn.textContent.toLowerCase() === lang) btn.classList.add('active');
         });
-        
-        // Reset Typing Animation
-        clearTimeout(typeTimeout); 
-        clearTimeout(eraseTimeout);
-        typedTextSpan.textContent = ''; 
-        charIndex = 0; 
-        textArrayIndex = 0;
+        clearTimeout(typeTimeout); clearTimeout(eraseTimeout);
+        typedTextSpan.textContent = ''; charIndex = 0; textArrayIndex = 0;
         textArray = translations[lang].typing_text;
         setTimeout(type, 500);
     }
 
     document.addEventListener("DOMContentLoaded", function() { 
         changeLanguage(currentLang); 
-        
-        // Observer for fade-in animations
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) entry.target.classList.add('visible');
           });
         }, { threshold: 0.1 });
-
         document.querySelectorAll('section').forEach(s => observer.observe(s));
         document.querySelectorAll('.project-card').forEach(c => observer.observe(c));
     });
@@ -619,16 +612,14 @@
     window.addEventListener("scroll", () => {
       const nav = document.getElementById("navbar");
       if (window.scrollY > 50) nav.classList.add("scrolled"); else nav.classList.remove("scrolled");
-      
       const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
       const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
       const scrolled = (winScroll / height) * 100;
       document.getElementById("scroll-progress").style.width = scrolled + "%";
     });
 
-    // 3D Tilt Logic
     function tiltCard(event, card) {
-      if(window.innerWidth < 768) return; // Disable on mobile
+      if(window.innerWidth < 768) return; 
       const cardRect = card.getBoundingClientRect();
       const x = event.clientX - cardRect.left;
       const y = event.clientY - cardRect.top;
@@ -643,7 +634,6 @@
       card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
     }
 
-    // --- STAR ANIMATION ---
     const canvas = document.getElementById('star-canvas');
     const ctx = canvas.getContext('2d');
     let stars = [];
