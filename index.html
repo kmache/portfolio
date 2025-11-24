@@ -199,6 +199,9 @@
     .project-img i { font-size: 4rem; color: rgba(255,255,255,0.2); transition: 0.5s; z-index: 2; }
     .project-card:hover .project-img i { transform: scale(1.2); color: white; text-shadow: 0 0 20px var(--accent-color); }
 
+    .project-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+    .project-card:hover .project-img img { transform: scale(1.1); }
+
     .project-content { padding: 25px; transform: translateZ(20px); flex-grow: 1; display: flex; flex-direction: column; }
     .project-content h3 { margin: 5px 0 10px; font-size: 1.5rem; color: white; }
     .project-content p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
@@ -313,8 +316,8 @@
         <div class="cta-buttons">
           <a href="#projects" class="btn btn-primary" data-i18n="btn_portfolio">View Projects</a>
           
-          <!-- Resume Link -->
-          <a href="rkarim_mache_cv.pdf" class="btn btn-outline" download="Ramiyou_Karim_CV.pdf" target="_blank" rel="noopener noreferrer" data-i18n="btn_resume">
+          <!-- UPDATED RESUME LINK: rkarim_mache_cv.pdf -->
+          <a href="rkarim_mache_cv.pdf" class="btn btn-outline" target="_blank" rel="noopener noreferrer" data-i18n="btn_resume">
             <i class="fas fa-download"></i> Resume
           </a>
           
@@ -322,6 +325,7 @@
       </div>
       
       <div class="hero-img">
+        <!-- UPDATED PHOTO: photo.png -->
         <img src="images/photo.png" alt="Ramiyou Karim" class="profile-pic">
       </div>
     </div>
@@ -361,16 +365,27 @@
     <div style="text-align: center;"><h2 class="section-title" data-i18n="projects_title">Featured Projects</h2></div>
     <div class="projects-grid">
       
-      <!-- Card 1 -->
+      <!-- Card 1: TOAR-classifier v2 -->
       <div class="project-card" onmousemove="tiltCard(event, this)" onmouseleave="resetTilt(this)">
-        <div class="project-img grad-1"><i class="fas fa-water"></i></div>
+        <div class="project-img">
+            <img src="images/project1_toarv2.png" alt="TOAR-classifier v2">
+        </div>
         <div class="project-content">
-          <h3 data-i18n="proj1_title">Shallow Water Solver</h3>
-          <p data-i18n="proj1_desc">Physics-Informed Neural Network (PINN) dashboard solving 2D shallow water equations in real-time.</p>
-          <div class="card-tags"><span class="mini-tag">Python</span><span class="mini-tag">PyTorch</span><span class="mini-tag">HPC</span></div>
+          <h3 data-i18n="proj1_title">TOAR-classifier v2</h3>
+          <p data-i18n="proj1_desc">TOAR-classifier v2 delivers objective classification for global air quality stations. By accurately identifying urban, rural, and suburban sites, the tool enhances the analysis of regional pollution signatures. It is currently employed in the second Tropospheric Ozone Assessment Report and is available for wider research applications.</p>
+          
+          <!-- UPDATED TAGS -->
+          <div class="card-tags">
+            <span class="mini-tag">Python</span>
+            <span class="mini-tag">Seaborn</span>
+            <span class="mini-tag">Scikit-learn</span>
+            <span class="mini-tag">LightGBM</span>
+            <span class="mini-tag">CatBoost</span>
+          </div>
+          
           <div class="project-links">
             <a href="#" target="_blank" rel="noopener noreferrer" data-i18n="link_demo"><i class="fas fa-external-link-alt"></i> Demo</a>
-            <a href="#" target="_blank" rel="noopener noreferrer" data-i18n="link_code"><i class="fab fa-github"></i> Code</a>
+            <a href="https://github.com/kmache/ml_for_toar_station_classification" target="_blank" rel="noopener noreferrer" data-i18n="link_code"><i class="fab fa-github"></i> Code</a>
           </div>
         </div>
       </div>
@@ -456,13 +471,9 @@
         I'm currently looking for new opportunities in AI Engineering. Whether you have a question or just want to say hi, I'll try my best to get back to you!
       </p>
       
-      <!-- UPDATED CONTACT LINKS -->
       <div class="social-icons">
         <a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-        
-        <!-- Updated GitHub Link -->
         <a href="https://github.com/kmache" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
-        
         <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
         <a href="mailto:rkarimmache@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
       </div>
@@ -488,7 +499,7 @@
         about_p2: "Beyond the code, I focus on bridging the gap between theoretical math and deployed software. I build systems that are not just accurate, but scalable and efficient on HPC infrastructure.",
         stack_title: "Technical Arsenal", projects_title: "Featured Projects",
         
-        proj1_title: "Shallow Water Solver", proj1_desc: "A Physics-Informed Neural Network (PINN) dashboard solving 2D shallow water equations in real-time.",
+        proj1_title: "TOAR-classifier v2", proj1_desc: "TOAR-classifier v2 delivers objective classification for global air quality stations. By accurately identifying urban, rural, and suburban sites, the tool enhances the analysis of regional pollution signatures. It is currently employed in the second Tropospheric Ozone Assessment Report and is available for wider research applications.",
         proj2_title: "Crypto Market Analyzer", proj2_desc: "Time-series forecasting app using LSTM models to predict market trends with 85% accuracy.",
         proj3_title: "Enterprise RAG Bot", proj3_desc: "Retrieval-Augmented Generation system allowing employees to query internal PDF documentation.",
         proj4_title: "Generative Art Engine", proj4_desc: "Creating unique digital art using Generative Adversarial Networks (GANs) and Style Transfer.",
@@ -510,7 +521,7 @@
         about_p2: "Actuellement, je me concentre sur l'architecture ML scalable et les PINNs. J'aime faire le lien entre mathématiques théoriques et logiciels de production.",
         stack_title: "Compétences", projects_title: "Projets Récents",
         
-        proj1_title: "Solveur Eaux Peu Profondes", proj1_desc: "Tableau de bord utilisant des PINN pour résoudre les équations 2D en temps réel.",
+        proj1_title: "TOAR-classifier v2", proj1_desc: "TOAR-classifier v2 fournit une classification objective des stations mondiales de qualité de l'air. En identifiant précisément les sites urbains, ruraux et périurbains, l'outil améliore l'analyse des signatures de pollution. Il est actuellement utilisé dans le deuxième rapport d'évaluation de l'ozone troposphérique.",
         proj2_title: "Analyseur de Marché Crypto", proj2_desc: "Application de prévision de séries temporelles utilisant des modèles LSTM.",
         proj3_title: "Chatbot RAG Entreprise", proj3_desc: "Système RAG permettant aux employés d'interroger la documentation interne PDF.",
         proj4_title: "Moteur d'Art Génératif", proj4_desc: "Création d'art numérique unique via des GANs et le transfert de style.",
@@ -532,7 +543,7 @@
         about_p2: "Derzeit konzentriere ich mich auf skalierbare ML-Architekturen und PINNs. Ich liebe es, die Lücke zwischen theoretischer Mathematik und produktiver Software zu schließen.",
         stack_title: "Tech Stack", projects_title: "Ausgewählte Projekte",
         
-        proj1_title: "Flachwasser-Löser", proj1_desc: "Ein PINN-Dashboard zur Lösung von 2D-Flachwassergleichungen in Echtzeit.",
+        proj1_title: "TOAR-classifier v2", proj1_desc: "TOAR-classifier v2 liefert eine objektive Klassifizierung globaler Luftqualitätsstationen. Durch die genaue Identifizierung städtischer, ländlicher und vorstädtischer Standorte verbessert das Tool die Analyse regionaler Verschmutzungssignaturen. Es wird derzeit im zweiten Tropospheric Ozone Assessment Report eingesetzt.",
         proj2_title: "Krypto-Markt-Analysator", proj2_desc: "Zeitreihenprognose-App mit LSTM-Modellen zur Vorhersage von Markttrends.",
         proj3_title: "Unternehmens-RAG-Bot", proj3_desc: "RAG-System, das Mitarbeitern die Abfrage interner PDF-Dokumentation ermöglicht.",
         proj4_title: "Generative Kunst-Engine", proj4_desc: "Erstellung einzigartiger digitaler Kunst mittels GANs und Style Transfer.",
