@@ -115,12 +115,10 @@
       box-shadow: 0 0 50px var(--accent-glow);
       animation: floatImg 6s ease-in-out infinite;
       position: relative; z-index: 2;
-      /* Image moved up */
       margin-top: -60px; 
       display: block;
     }
 
-    /* Spinning circle behind image */
     .hero-img::before {
       content: ''; position: absolute; top: -60px; 
       width: 400px; height: 400px;
@@ -129,9 +127,16 @@
     }
 
     h1 { font-size: 3.8rem; margin-bottom: 15px; line-height: 1.1; }
-    .gradient-text { background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     
-    .typing-container { font-size: 1.6rem; color: var(--text-secondary); margin-bottom: 30px; display: flex; align-items: center; min-height: 1.6rem;}
+    /* --- FIX 1: Added background-clip to silence VS Code warning --- */
+    .gradient-text { 
+        background: var(--gradient-text); 
+        -webkit-background-clip: text; 
+        background-clip: text; 
+        -webkit-text-fill-color: transparent; 
+    }
+    
+    .typing-container { font-size: 1.6rem; color: var(--text-secondary); margin-bottom: 30px; display: flex; align-items: center; min-height: 60px;}
     .cursor { width: 3px; height: 26px; background-color: var(--accent-color); margin-left: 5px; animation: blink 1s infinite; }
     
     .cta-buttons { display: flex; gap: 15px; margin-top: 35px; }
@@ -149,23 +154,16 @@
     /* --- SECTIONS --- */
     section { padding: 100px 20px; max-width: 1200px; margin: 0 auto; }
     
-    /* MODIFIED: Completely underlined title */
     .section-title { font-size: 2.5rem; margin-bottom: 60px; position: relative; display: inline-block; }
     .section-title::after { 
-        content: ''; 
-        display: block; 
-        width: 100%; /* Changed to 100% for full underline */
-        height: 4px; 
-        background: var(--gradient-text); 
-        margin-top: 8px; 
-        border-radius: 2px; 
+        content: ''; display: block; width: 100%; height: 4px; 
+        background: var(--gradient-text); margin-top: 8px; border-radius: 2px; 
     }
 
     /* --- ABOUT & SKILLS --- */
     .about-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 60px; align-items: start; }
     .about-text p { font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary); margin-bottom: 20px; }
     
-    .tech-stack-wrapper { position: relative; overflow: hidden; mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
     .skills-container { display: flex; flex-wrap: wrap; gap: 12px; }
     .skill-pill {
       background: rgba(30, 41, 59, 0.6); border: 1px solid var(--glass-border);
@@ -175,7 +173,7 @@
     .skill-pill i { color: var(--accent-color); }
     .skill-pill:hover { border-color: var(--accent-color); background: rgba(56, 189, 248, 0.1); transform: translateY(-2px); }
 
-    /* --- PROJECTS (3D Tilt) --- */
+    /* --- PROJECTS --- */
     .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 40px; }
     
     .project-card {
@@ -188,7 +186,6 @@
     .project-card.visible { opacity: 1; transform: translateY(0); }
     .project-card:hover { border-color: var(--accent-secondary); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
     
-    /* Abstract Gradient Background for Projects */
     .project-img { 
       height: 200px; display: flex; align-items: center; justify-content: center; 
       position: relative; overflow: hidden;
@@ -221,7 +218,6 @@
         border: 1px solid var(--glass-border); max-width: 700px; margin: 0 auto;
         position: relative; overflow: hidden;
     }
-    /* Glow effect behind contact box */
     .contact-box::after {
         content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
         background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
@@ -247,7 +243,7 @@
     @media (max-width: 992px) {
       .hero-container { flex-direction: column-reverse; text-align: center; padding-top: 40px; }
       .hero-img { margin-bottom: 30px; width: 100%; }
-      .profile-pic { width: 300px; height: 300px; margin-top: 0; } /* Reset margin on mobile for better layout */
+      .profile-pic { width: 300px; height: 300px; margin-top: 0; }
       .hero-img::before { width: 320px; height: 320px; top: -10px; }
       
       .about-grid { grid-template-columns: 1fr; }
@@ -322,7 +318,8 @@
       </div>
       
       <div class="hero-img">
-        <img src="images/photo1.png" alt="Ramiyou Karim" class="profile-pic">
+        <!-- FIX 2: Correct image path set to your local file -->
+        <img src="images/photo.png" alt="Ramiyou Karim" class="profile-pic">
       </div>
     </div>
   </header>
@@ -353,7 +350,7 @@
           <div class="skill-pill"><i class="fas fa-wave-square"></i> PINNs</div>
         </div>
       </div>
-i    </div>
+    </div>
   </section>
 
   <!-- Projects Section -->
@@ -369,8 +366,8 @@ i    </div>
           <p data-i18n="proj1_desc">Physics-Informed Neural Network (PINN) dashboard solving 2D shallow water equations in real-time.</p>
           <div class="card-tags"><span class="mini-tag">Python</span><span class="mini-tag">PyTorch</span><span class="mini-tag">HPC</span></div>
           <div class="project-links">
-            <a href="#" data-i18n="link_demo"><i class="fas fa-external-link-alt"></i> Demo</a>
-            <a href="#" data-i18n="link_code"><i class="fab fa-github"></i> Code</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" data-i18n="link_demo"><i class="fas fa-external-link-alt"></i> Demo</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" data-i18n="link_code"><i class="fab fa-github"></i> Code</a>
           </div>
         </div>
       </div>
@@ -383,8 +380,8 @@ i    </div>
           <p data-i18n="proj2_desc">Time-series forecasting app using LSTM models to predict market trends with 85% accuracy.</p>
           <div class="card-tags"><span class="mini-tag">LSTM</span><span class="mini-tag">Pandas</span><span class="mini-tag">API</span></div>
           <div class="project-links">
-            <a href="#" data-i18n="link_demo"><i class="fas fa-external-link-alt"></i> Demo</a>
-            <a href="#" data-i18n="link_code"><i class="fab fa-github"></i> Code</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" data-i18n="link_demo"><i class="fas fa-external-link-alt"></i> Demo</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" data-i18n="link_code"><i class="fab fa-github"></i> Code</a>
           </div>
         </div>
       </div>
@@ -397,8 +394,8 @@ i    </div>
           <p data-i18n="proj3_desc">Retrieval-Augmented Generation system allowing employees to query internal PDF documentation securely.</p>
           <div class="card-tags"><span class="mini-tag">LLM</span><span class="mini-tag">LangChain</span><span class="mini-tag">Pinecone</span></div>
           <div class="project-links">
-            <a href="#" data-i18n="link_demo"><i class="fas fa-external-link-alt"></i> Demo</a>
-            <a href="#" data-i18n="link_code"><i class="fab fa-github"></i> Code</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" data-i18n="link_demo"><i class="fas fa-external-link-alt"></i> Demo</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" data-i18n="link_code"><i class="fab fa-github"></i> Code</a>
           </div>
         </div>
       </div>
@@ -411,8 +408,8 @@ i    </div>
           <p data-i18n="proj4_desc">Creating unique digital art using Generative Adversarial Networks (GANs) and Style Transfer.</p>
           <div class="card-tags"><span class="mini-tag">GANs</span><span class="mini-tag">TensorFlow</span><span class="mini-tag">Flask</span></div>
           <div class="project-links">
-            <a href="#" data-i18n="link_demo"><i class="fas fa-external-link-alt"></i> Demo</a>
-            <a href="#" data-i18n="link_code"><i class="fab fa-github"></i> Code</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" data-i18n="link_demo"><i class="fas fa-external-link-alt"></i> Demo</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" data-i18n="link_code"><i class="fab fa-github"></i> Code</a>
           </div>
         </div>
       </div>
@@ -425,8 +422,8 @@ i    </div>
           <p data-i18n="proj5_desc">Computer vision system for obstacle avoidance and path planning in quadcopters.</p>
           <div class="card-tags"><span class="mini-tag">OpenCV</span><span class="mini-tag">YOLO</span><span class="mini-tag">Embedded</span></div>
           <div class="project-links">
-            <a href="#" data-i18n="link_demo"><i class="fas fa-external-link-alt"></i> Demo</a>
-            <a href="#" data-i18n="link_code"><i class="fab fa-github"></i> Code</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" data-i18n="link_demo"><i class="fas fa-external-link-alt"></i> Demo</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" data-i18n="link_code"><i class="fab fa-github"></i> Code</a>
           </div>
         </div>
       </div>
@@ -439,8 +436,8 @@ i    </div>
           <p data-i18n="proj6_desc">High-throughput data ingestion system processing 1M+ events/second using Kafka and Spark.</p>
           <div class="card-tags"><span class="mini-tag">Kafka</span><span class="mini-tag">Spark</span><span class="mini-tag">AWS</span></div>
           <div class="project-links">
-            <a href="#" data-i18n="link_demo"><i class="fas fa-external-link-alt"></i> Demo</a>
-            <a href="#" data-i18n="link_code"><i class="fab fa-github"></i> Code</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" data-i18n="link_demo"><i class="fas fa-external-link-alt"></i> Demo</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" data-i18n="link_code"><i class="fab fa-github"></i> Code</a>
           </div>
         </div>
       </div>
@@ -457,9 +454,9 @@ i    </div>
       </p>
       
       <div class="social-icons">
-        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
-        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
         <a href="mailto:rkarimmache@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
       </div>
       
@@ -481,7 +478,7 @@ i    </div>
         btn_portfolio: "View Projects", btn_resume: '<i class="fas fa-download"></i> Resume',
         about_title: "About Me",
         about_p1: "Data Scientist & Machine Learning Specialist with 5+ years of experience analyzing complex, large-scale datasets. I hold a strong background in Applied Mathematics, currently researching Neural Networks for Fluid Simulation.",
-        about_p2: "I am currently focused on advancing deep learning architectures, RAG systems, and Physics-Informed Neural Networks (PINNs).",
+        about_p2: "Beyond the code, I focus on bridging the gap between theoretical math and deployed software. I build systems that are not just accurate, but scalable and efficient on HPC infrastructure.",
         stack_title: "Technical Arsenal", projects_title: "Featured Projects",
         
         proj1_title: "Shallow Water Solver", proj1_desc: "A Physics-Informed Neural Network (PINN) dashboard solving 2D shallow water equations in real-time.",
@@ -499,10 +496,10 @@ i    </div>
       fr: {
         nav_home: "Accueil", nav_about: "À Propos", nav_projects: "Projets", nav_contact: "Contact",
         hero_greeting: "Bonjour, je suis <br><span class='gradient-text'>Ramiyou Karim Mache</span>", hero_iam: "Je suis ",
-        hero_desc: "Transformer des données complexes en solutions intelligentes. Spécialisée en Calcul Haute Performance et IA.",
+        hero_desc: "Transformer des données complexes en solutions intelligentes. Spécialisé en Calcul Haute Performance et IA.",
         btn_portfolio: "Voir Projets", btn_resume: '<i class="fas fa-download"></i> CV',
         about_title: "À Propos",
-        about_p1: "Data Scientist & Spécialiste ML avec 5+ ans d'expérience. Je suis mathématicienne appliquée et ingénieure en IA, passionnée par la résolution de problèmes concrets par le code et le calcul haute performance.",
+        about_p1: "Data Scientist & Spécialiste ML avec 5+ ans d'expérience. Je suis mathématicien appliqué et ingénieur en IA, passionné par la résolution de problèmes concrets par le code et le calcul haute performance.",
         about_p2: "Actuellement, je me concentre sur l'architecture ML scalable et les PINNs. J'aime faire le lien entre mathématiques théoriques et logiciels de production.",
         stack_title: "Compétences", projects_title: "Projets Récents",
         
@@ -516,15 +513,15 @@ i    </div>
         link_demo: '<i class="fas fa-external-link-alt"></i> Démo', link_code: '<i class="fab fa-github"></i> Code',
         contact_title: "Travaillons Ensemble", contact_desc: "Je suis actuellement à la recherche de nouvelles opportunités. N'hésitez pas à me contacter pour toute question !",
         btn_say_hello: "Me Contacter", footer_credit: 'Conçu avec <i class="fas fa-heart" style="color: var(--accent-color);"></i> et du Code.',
-        typing_text: ["Data Scientist", "Ingénieure IA", "Spécialiste HPC", "Mathématicienne"]
+        typing_text: ["Data Scientist", "Ingénieur IA", "Spécialiste HPC", "Mathématicien"]
       },
       de: {
-        nav_home: "Start", nav_about: "Über Mich", nav_projects: "Projekte", nav_contact: "Kontakt",
+        nav_home: "Startseite", nav_about: "Über Mich", nav_projects: "Projekte", nav_contact: "Kontakt",
         hero_greeting: "Hallo, ich bin <br><span class='gradient-text'>Ramiyou Karim Mache</span>", hero_iam: "Ich bin ",
         hero_desc: "Ich verwandle komplexe Daten in intelligente Lösungen. Spezialisiert auf High-Performance Computing und KI.",
         btn_portfolio: "Projekte ansehen", btn_resume: '<i class="fas fa-download"></i> Lebenslauf',
         about_title: "Über Mich",
-        about_p1: "Data Scientist & ML-Spezialistin mit 5+ Jahren Erfahrung. Ich bin angewandte Mathematikerin und KI-Ingenieurin mit einer Leidenschaft für Problemlösung durch Code und High-Performance Computing.",
+        about_p1: "Data Scientist & ML-Spezialist mit 5+ Jahren Erfahrung. Ich bin angewandter Mathematiker und KI-Ingenieur mit einer Leidenschaft für Problemlösung durch Code und High-Performance Computing.",
         about_p2: "Derzeit konzentriere ich mich auf skalierbare ML-Architekturen und PINNs. Ich liebe es, die Lücke zwischen theoretischer Mathematik und produktiver Software zu schließen.",
         stack_title: "Tech Stack", projects_title: "Ausgewählte Projekte",
         
@@ -538,7 +535,7 @@ i    </div>
         link_demo: '<i class="fas fa-external-link-alt"></i> Demo', link_code: '<i class="fab fa-github"></i> Code',
         contact_title: "Lass uns zusammenarbeiten", contact_desc: "Ich bin derzeit auf der Suche nach neuen Möglichkeiten im Bereich KI-Engineering. Schreib mir gerne!",
         btn_say_hello: "Hallo sagen", footer_credit: 'Entwickelt mit <i class="fas fa-heart" style="color: var(--accent-color);"></i> und Code.',
-        typing_text: ["Data Scientist", "KI-Ingenieurin", "HPC-Spezialistin", "Problemlöserin"]
+        typing_text: ["Data Scientist", "KI-Ingenieur", "HPC-Spezialist", "Problemlöser"]
       }
     };
 
@@ -559,6 +556,9 @@ i    </div>
     }
 
     function type() {
+      // Safety check if array index is out of bounds after language switch
+      if (textArrayIndex >= textArray.length) textArrayIndex = 0;
+      
       if (charIndex < textArray[textArrayIndex].length) {
         typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
         charIndex++;
@@ -591,8 +591,13 @@ i    </div>
             btn.classList.remove('active');
             if(btn.textContent.toLowerCase() === lang) btn.classList.add('active');
         });
-        clearTimeout(typeTimeout); clearTimeout(eraseTimeout);
-        typedTextSpan.textContent = ''; charIndex = 0; textArrayIndex = 0;
+        
+        // Reset Typing Animation
+        clearTimeout(typeTimeout); 
+        clearTimeout(eraseTimeout);
+        typedTextSpan.textContent = ''; 
+        charIndex = 0; 
+        textArrayIndex = 0;
         textArray = translations[lang].typing_text;
         setTimeout(type, 500);
     }
