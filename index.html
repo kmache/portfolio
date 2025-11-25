@@ -22,7 +22,7 @@
       --accent-glow: rgba(56, 189, 248, 0.4);
       --text-primary: #f8fafc;
       --text-secondary: #94a3b8;
-      --glass-bg: rgba(30, 41, 59, 0.6);
+      --glass-bg: rgba(30, 41, 59, 0.7);
       --glass-border: rgba(255, 255, 255, 0.08);
       --gradient-text: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
     }
@@ -173,11 +173,11 @@
     .skill-pill:hover { border-color: var(--accent-color); background: rgba(56, 189, 248, 0.1); transform: translateY(-2px); }
 
     /* --- PROJECTS --- */
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 40px; }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
     
     .project-card {
       background: var(--glass-bg); border: 1px solid var(--glass-border);
-      border-radius: 16px; overflow: hidden; transition: opacity 0.6s, transform 0.6s;
+      border-radius: 14px; overflow: hidden; transition: opacity 0.6s, transform 0.6s;
       opacity: 0; transform: translateY(40px);
       transform-style: preserve-3d; perspective: 1000px;
       display: flex; flex-direction: column;
@@ -185,8 +185,10 @@
     .project-card.visible { opacity: 1; transform: translateY(0); }
     .project-card:hover { border-color: var(--accent-secondary); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
     
+    /* --- Compact Image Height --- */
     .project-img { 
-      height: 200px; display: flex; align-items: center; justify-content: center; 
+      height: 160px; 
+      display: flex; align-items: center; justify-content: center; 
       position: relative; overflow: hidden;
     }
     .grad-1 { background: linear-gradient(45deg, #0f172a, #1e40af); }
@@ -196,22 +198,60 @@
     .grad-5 { background: linear-gradient(45deg, #0f172a, #9f1239); }
     .grad-6 { background: linear-gradient(45deg, #0f172a, #ca8a04); }
 
-    .project-img i { font-size: 4rem; color: rgba(255,255,255,0.2); transition: 0.5s; z-index: 2; }
+    .project-img i { font-size: 3.5rem; color: rgba(255,255,255,0.2); transition: 0.5s; z-index: 2; }
     .project-card:hover .project-img i { transform: scale(1.2); color: white; text-shadow: 0 0 20px var(--accent-color); }
 
-    /* Style for Project Images (replaces icons) */
     .project-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
     .project-card:hover .project-img img { transform: scale(1.1); }
 
-    .project-content { padding: 25px; transform: translateZ(20px); flex-grow: 1; display: flex; flex-direction: column; }
-    .project-content h3 { margin: 5px 0 10px; font-size: 1.5rem; color: white; }
-    .project-content p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
+    /* --- Compact Content Padding --- */
+    .project-content { padding: 18px; transform: translateZ(20px); flex-grow: 1; display: flex; flex-direction: column; }
+    .project-content h3 { margin: 0 0 8px; font-size: 1.3rem; color: white; }
     
-    .card-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; margin-bottom: 20px; }
-    .mini-tag { font-size: 0.75rem; background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 4px; color: var(--accent-color); border: 1px solid rgba(255,255,255,0.05); }
+    /* --- Read More Logic (Fixed Line Clamp) --- */
+    .desc-wrapper { position: relative; margin-bottom: 12px; }
 
-    .project-links { border-top: 1px solid var(--glass-border); padding-top: 15px; display: flex; gap: 20px; }
-    .project-links a { color: white; text-decoration: none; font-size: 0.9rem; transition: 0.3s; display: flex; align-items: center; gap: 5px; }
+    .project-desc { 
+        color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; 
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; 
+        line-clamp: 2; /* Added Standard Property */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transition: all 0.3s ease;
+    }
+    
+    .desc-wrapper.expanded .project-desc { 
+        -webkit-line-clamp: unset; 
+        line-clamp: unset; /* Added Standard Property */
+        overflow: visible; 
+    }
+
+    .read-more-btn {
+        background: linear-gradient(90deg, transparent, #162033 20%);
+        border: none; padding: 0 0 0 15px;
+        color: var(--accent-color); font-size: 0.75rem; font-weight: 700; 
+        cursor: pointer; 
+        text-transform: lowercase;
+        letter-spacing: 0.5px;
+        transition: 0.3s;
+        position: absolute; bottom: 0; right: 0;
+    }
+
+    .desc-wrapper.expanded .read-more-btn {
+        position: relative; float: right;
+        background: none; margin-top: 5px; padding-left: 0;
+    }
+
+    .read-more-btn:hover { color: white; text-shadow: 0 0 10px var(--accent-color); }
+
+    .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; margin-bottom: 12px; }
+    .mini-tag { font-size: 0.7rem; background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 4px; color: var(--accent-color); border: 1px solid rgba(255,255,255,0.05); }
+
+    .project-links { border-top: 1px solid var(--glass-border); padding-top: 10px; display: flex; gap: 15px; }
+    .project-links a { color: white; text-decoration: none; font-size: 0.85rem; transition: 0.3s; display: flex; align-items: center; gap: 5px; }
     .project-links a:hover { color: var(--accent-color); }
 
     /* --- CONTACT --- */
@@ -316,11 +356,9 @@
         </p>
         <div class="cta-buttons">
           <a href="#projects" class="btn btn-primary" data-i18n="btn_portfolio">View Projects</a>
-          
           <a href="rkarim_mache_cv.pdf" class="btn btn-outline" target="_blank" rel="noopener noreferrer" data-i18n="btn_resume">
             <i class="fas fa-download"></i> Resume
           </a>
-          
         </div>
       </div>
       
@@ -371,7 +409,11 @@
         </div>
         <div class="project-content">
           <h3 data-i18n="proj1_title">TOAR-classifier v2</h3>
-          <p data-i18n="proj1_desc">TOAR-classifier v2 delivers objective classification for global air quality stations. By accurately identifying urban, rural, and suburban sites, the tool enhances the analysis of regional pollution signatures. It is currently employed in the second Tropospheric Ozone Assessment Report and is available for wider research applications.</p>
+          
+          <div class="desc-wrapper">
+            <p class="project-desc" data-i18n="proj1_desc">ML classification for global air quality stations, accurately distinguishing urban, rural, and suburban sites. Enhances regional pollution analysis and is used in the second Tropospheric Ozone Assessment Report, with availability for broader research applications.</p>
+            <button class="read-more-btn" onclick="toggleReadMore(this)" data-i18n="btn_read_more">read more</button>
+          </div>
           
           <div class="card-tags">
             <span class="mini-tag">Python</span>
@@ -388,15 +430,19 @@
         </div>
       </div>
 
-      <!-- Card 2: Vision Defect Detector (UPDATED) -->
+      <!-- Card 2: Vision Defect Detector -->
       <div class="project-card" onmousemove="tiltCard(event, this)" onmouseleave="resetTilt(this)">
         <div class="project-img">
             <img src="images/project2.png" alt="Vision Defect Detector">
         </div>
         <div class="project-content">
           <h3 data-i18n="proj2_title">Vision Defect Detector</h3>
-          <p data-i18n="proj2_desc">Industrial Quality Control & Defect Detection System</p>
-          <!-- Updated tags to match Computer Vision theme -->
+          
+          <div class="desc-wrapper">
+            <p class="project-desc" data-i18n="proj2_desc">Industrial Quality Control & Defect Detection System utilizing advanced computer vision techniques to identify anomalies in production lines.</p>
+            <button class="read-more-btn" onclick="toggleReadMore(this)" data-i18n="btn_read_more">read more</button>
+          </div>
+
           <div class="card-tags"><span class="mini-tag">OpenCV</span><span class="mini-tag">PyTorch</span><span class="mini-tag">CNN</span></div>
           <div class="project-links">
             <a href="#" target="_blank" rel="noopener noreferrer" data-i18n="link_demo"><i class="fas fa-external-link-alt"></i> Demo</a>
@@ -405,13 +451,20 @@
         </div>
       </div>
 
-      <!-- Card 3 -->
+      <!-- Card 3: Multi-Agent Autonomous Trading System -->
       <div class="project-card" onmousemove="tiltCard(event, this)" onmouseleave="resetTilt(this)">
-        <div class="project-img grad-3"><i class="fas fa-robot"></i></div>
+        <div class="project-img">
+            <img src="images/project3.png" alt="Multi-Agent Trading">
+        </div>
         <div class="project-content">
-          <h3 data-i18n="proj3_title">Enterprise RAG Bot</h3>
-          <p data-i18n="proj3_desc">Retrieval-Augmented Generation system allowing employees to query internal PDF documentation securely.</p>
-          <div class="card-tags"><span class="mini-tag">LLM</span><span class="mini-tag">LangChain</span><span class="mini-tag">Pinecone</span></div>
+          <h3 data-i18n="proj3_title">Causal-Driven Multi-Agent Trading System</h3>
+          
+          <div class="desc-wrapper">
+            <p class="project-desc" data-i18n="proj3_desc">Multi-Agent Autonomous Trading System with Causal Reward Shaping, a cooperative five-agent trading system (macro, sector, technical, sentiment, risk) that achieves a 1.5 Sharpe ratio while ensuring market-neutrality through causal P&L attribution.</p>
+            <button class="read-more-btn" onclick="toggleReadMore(this)" data-i18n="btn_read_more">read more</button>
+          </div>
+
+          <div class="card-tags"><span class="mini-tag">RL</span><span class="mini-tag">Multi-Agent</span><span class="mini-tag">Causal Inference</span></div>
           <div class="project-links">
             <a href="#" target="_blank" rel="noopener noreferrer" data-i18n="link_demo"><i class="fas fa-external-link-alt"></i> Demo</a>
             <a href="#" target="_blank" rel="noopener noreferrer" data-i18n="link_code"><i class="fab fa-github"></i> Code</a>
@@ -424,7 +477,12 @@
         <div class="project-img grad-4"><i class="fas fa-paint-brush"></i></div>
         <div class="project-content">
           <h3 data-i18n="proj4_title">Generative Art Engine</h3>
-          <p data-i18n="proj4_desc">Creating unique digital art using Generative Adversarial Networks (GANs) and Style Transfer.</p>
+          
+          <div class="desc-wrapper">
+            <p class="project-desc" data-i18n="proj4_desc">Creating unique digital art using Generative Adversarial Networks (GANs) and Style Transfer. A creative AI tool that merges artistic styles with neural rendering.</p>
+            <button class="read-more-btn" onclick="toggleReadMore(this)" data-i18n="btn_read_more">read more</button>
+          </div>
+
           <div class="card-tags"><span class="mini-tag">GANs</span><span class="mini-tag">TensorFlow</span><span class="mini-tag">Flask</span></div>
           <div class="project-links">
             <a href="#" target="_blank" rel="noopener noreferrer" data-i18n="link_demo"><i class="fas fa-external-link-alt"></i> Demo</a>
@@ -438,7 +496,12 @@
         <div class="project-img grad-5"><i class="fas fa-plane"></i></div>
         <div class="project-content">
           <h3 data-i18n="proj5_title">Drone Navigation</h3>
-          <p data-i18n="proj5_desc">Computer vision system for obstacle avoidance and path planning in quadcopters.</p>
+          
+          <div class="desc-wrapper">
+            <p class="project-desc" data-i18n="proj5_desc">Computer vision system for obstacle avoidance and path planning in quadcopters. Capable of real-time decision making in complex environments.</p>
+            <button class="read-more-btn" onclick="toggleReadMore(this)" data-i18n="btn_read_more">read more</button>
+          </div>
+
           <div class="card-tags"><span class="mini-tag">OpenCV</span><span class="mini-tag">YOLO</span><span class="mini-tag">Embedded</span></div>
           <div class="project-links">
             <a href="#" target="_blank" rel="noopener noreferrer" data-i18n="link_demo"><i class="fas fa-external-link-alt"></i> Demo</a>
@@ -452,7 +515,12 @@
         <div class="project-img grad-6"><i class="fas fa-server"></i></div>
         <div class="project-content">
           <h3 data-i18n="proj6_title">ETL Pipeline</h3>
-          <p data-i18n="proj6_desc">High-throughput data ingestion system processing 1M+ events/second using Kafka and Spark.</p>
+          
+          <div class="desc-wrapper">
+            <p class="project-desc" data-i18n="proj6_desc">High-throughput data ingestion system processing 1M+ events/second using Kafka and Spark. Ensures data integrity and real-time availability for analytics dashboards.</p>
+            <button class="read-more-btn" onclick="toggleReadMore(this)" data-i18n="btn_read_more">read more</button>
+          </div>
+
           <div class="card-tags"><span class="mini-tag">Kafka</span><span class="mini-tag">Spark</span><span class="mini-tag">AWS</span></div>
           <div class="project-links">
             <a href="#" target="_blank" rel="noopener noreferrer" data-i18n="link_demo"><i class="fas fa-external-link-alt"></i> Demo</a>
@@ -500,17 +568,19 @@
         about_p2: "Beyond the code, I focus on bridging the gap between theoretical math and deployed software. I build systems that are not just accurate, but scalable and efficient on HPC infrastructure.",
         stack_title: "Technical Arsenal", projects_title: "Featured Projects",
         
-        proj1_title: "TOAR-classifier v2", proj1_desc: "TOAR-classifier v2 delivers objective classification for global air quality stations. By accurately identifying urban, rural, and suburban sites, the tool enhances the analysis of regional pollution signatures. It is currently employed in the second Tropospheric Ozone Assessment Report and is available for wider research applications.",
-        proj2_title: "Vision Defect Detector", proj2_desc: "Industrial Quality Control & Defect Detection System",
-        proj3_title: "Enterprise RAG Bot", proj3_desc: "Retrieval-Augmented Generation system allowing employees to query internal PDF documentation.",
-        proj4_title: "Generative Art Engine", proj4_desc: "Creating unique digital art using Generative Adversarial Networks (GANs) and Style Transfer.",
-        proj5_title: "Autonomous Drone Nav", proj5_desc: "Computer vision system for obstacle avoidance and path planning in quadcopters.",
-        proj6_title: "Real-time ETL Pipeline", proj6_desc: "High-throughput data ingestion system processing 1M+ events/second using Kafka and Spark.",
+        proj1_title: "TOAR-classifier v2", proj1_desc: "ML classification for global air quality stations, accurately distinguishing urban, rural, and suburban sites. Enhances regional pollution analysis and is used in the second Tropospheric Ozone Assessment Report, with availability for broader research applications.",
+        proj2_title: "Vision Defect Detector", proj2_desc: "Industrial Quality Control & Defect Detection System utilizing advanced computer vision techniques to identify anomalies in production lines.",
+        proj3_title: "Causal-Driven Multi-Agent Trading System", proj3_desc: "Multi-Agent Autonomous Trading System with Causal Reward Shaping, a cooperative five-agent trading system (macro, sector, technical, sentiment, risk) that achieves a 1.5 Sharpe ratio while ensuring market-neutrality through causal P&L attribution.",
+        proj4_title: "Generative Art Engine", proj4_desc: "Creating unique digital art using Generative Adversarial Networks (GANs) and Style Transfer. A creative AI tool that merges artistic styles with neural rendering.",
+        proj5_title: "Autonomous Drone Nav", proj5_desc: "Computer vision system for obstacle avoidance and path planning in quadcopters. Capable of real-time decision making in complex environments.",
+        proj6_title: "Real-time ETL Pipeline", proj6_desc: "High-throughput data ingestion system processing 1M+ events/second using Kafka and Spark. Ensures data integrity and real-time availability for analytics dashboards.",
         
         link_demo: '<i class="fas fa-external-link-alt"></i> Demo', link_code: '<i class="fab fa-github"></i> Code',
         contact_title: "Let's Work Together", contact_desc: "I am currently seeking new opportunities in AI Engineering and Data Science. Don’t hesitate to reach out!",
         btn_say_hello: "Say Hello", footer_credit: 'Designed with <i class="fas fa-heart" style="color: var(--accent-color);"></i> and Code.',
-        typing_text: ["Data Scientist", "AI Engineer", "HPC Specialist", "Mathematician"]
+        typing_text: ["Data Scientist", "AI Engineer", "HPC Specialist", "Mathematician"],
+        
+        btn_read_more: "read more", btn_read_less: "read less"
       },
       fr: {
         nav_home: "Accueil", nav_about: "À Propos", nav_projects: "Projets", nav_contact: "Contact",
@@ -522,17 +592,19 @@
         about_p2: "Actuellement, je me concentre sur l'architecture ML scalable et les PINNs. J'aime faire le lien entre mathématiques théoriques et logiciels de production.",
         stack_title: "Compétences", projects_title: "Projets Récents",
         
-        proj1_title: "TOAR-classifier v2", proj1_desc: "TOAR-classifier v2 fournit une classification objective des stations mondiales de qualité de l'air. En identifiant précisément les sites urbains, ruraux et périurbains, l'outil améliore l'analyse des signatures de pollution. Il est actuellement utilisé dans le deuxième rapport d'évaluation de l'ozone troposphérique.",
-        proj2_title: "Détecteur de Défauts par Vision", proj2_desc: "Système de contrôle qualité industriel et de détection de défauts",
-        proj3_title: "Chatbot RAG Entreprise", proj3_desc: "Système RAG permettant aux employés d'interroger la documentation interne PDF.",
-        proj4_title: "Moteur d'Art Génératif", proj4_desc: "Création d'art numérique unique via des GANs et le transfert de style.",
-        proj5_title: "Navigation Drone Autonome", proj5_desc: "Système de vision par ordinateur pour l'évitement d'obstacles et la planification de trajectoire.",
-        proj6_title: "Pipeline ETL Temps Réel", proj6_desc: "Système d'ingestion haute performance traitant 1M+ événements/seconde avec Kafka et Spark.",
+        proj1_title: "TOAR-classifier v2", proj1_desc: "Classification ML pour les stations mondiales de qualité de l'air, distinguant avec précision les sites urbains, ruraux et périurbains. Améliore l'analyse de la pollution régionale et est utilisé dans le deuxième rapport d'évaluation de l'ozone troposphérique.",
+        proj2_title: "Détecteur de Défauts par Vision", proj2_desc: "Système de contrôle qualité industriel et de détection de défauts utilisant des techniques avancées de vision par ordinateur pour identifier les anomalies.",
+        proj3_title: "Système de Trading Multi-Agents Piloté par la Causalité", proj3_desc: "Système de trading autonome multi-agents avec façonnage de récompense causal. Un système coopératif à cinq agents (macro, secteur, technique, sentiment, risque) atteignant un ratio de Sharpe de 1,5 tout en assurant la neutralité du marché grâce à l'attribution causale des P&L.",
+        proj4_title: "Moteur d'Art Génératif", proj4_desc: "Création d'art numérique unique via des GANs et le transfert de style. Un outil d'IA créatif qui fusionne les styles artistiques avec le rendu neuronal.",
+        proj5_title: "Navigation Drone Autonome", proj5_desc: "Système de vision par ordinateur pour l'évitement d'obstacles et la planification de trajectoire pour quadricoptères. Capable de prise de décision en temps réel.",
+        proj6_title: "Pipeline ETL Temps Réel", proj6_desc: "Système d'ingestion haute performance traitant 1M+ événements/seconde avec Kafka et Spark. Assure l'intégrité des données et la disponibilité en temps réel.",
         
         link_demo: '<i class="fas fa-external-link-alt"></i> Démo', link_code: '<i class="fab fa-github"></i> Code',
         contact_title: "Travaillons Ensemble", contact_desc: "Je suis actuellement à la recherche de nouvelles opportunités. N'hésitez pas à me contacter pour toute question !",
         btn_say_hello: "Me Contacter", footer_credit: 'Conçu avec <i class="fas fa-heart" style="color: var(--accent-color);"></i> et du Code.',
-        typing_text: ["Data Scientist", "Ingénieur IA", "Spécialiste HPC", "Mathématicien"]
+        typing_text: ["Data Scientist", "Ingénieur IA", "Spécialiste HPC", "Mathématicien"],
+        
+        btn_read_more: "lire plus", btn_read_less: "lire moins"
       },
       de: {
         nav_home: "Startseite", nav_about: "Über Mich", nav_projects: "Projekte", nav_contact: "Kontakt",
@@ -544,17 +616,19 @@
         about_p2: "Derzeit konzentriere ich mich auf skalierbare ML-Architekturen und PINNs. Ich liebe es, die Lücke zwischen theoretischer Mathematik und produktiver Software zu schließen.",
         stack_title: "Tech Stack", projects_title: "Ausgewählte Projekte",
         
-        proj1_title: "TOAR-classifier v2", proj1_desc: "TOAR-classifier v2 liefert eine objektive Klassifizierung globaler Luftqualitätsstationen. Durch die genaue Identifizierung städtischer, ländlicher und vorstädtischer Standorte verbessert das Tool die Analyse regionaler Verschmutzungssignaturen. Es wird derzeit im zweiten Tropospheric Ozone Assessment Report eingesetzt.",
-        proj2_title: "Optische Fehlererkennung", proj2_desc: "Industrielles Qualitätskontroll- und Fehlererkennungssystem",
-        proj3_title: "Unternehmens-RAG-Bot", proj3_desc: "RAG-System, das Mitarbeitern die Abfrage interner PDF-Dokumentation ermöglicht.",
-        proj4_title: "Generative Kunst-Engine", proj4_desc: "Erstellung einzigartiger digitaler Kunst mittels GANs und Style Transfer.",
-        proj5_title: "Autonome Drohnennavigation", proj5_desc: "Computer-Vision-System zur Hindernisvermeidung und Pfadplanung bei Quadrokoptern.",
-        proj6_title: "Echtzeit-ETL-Pipeline", proj6_desc: "Hochleistungs-Datenerfassungssystem, das 1M+ Ereignisse/Sekunde mit Kafka und Spark verarbeitet.",
+        proj1_title: "TOAR-classifier v2", proj1_desc: "ML-Klassifizierung für globale Luftqualitätsstationen zur genauen Unterscheidung von städtischen, ländlichen und vorstädtischen Standorten. Verbessert die regionale Verschmutzungsanalyse und wird im zweiten Tropospheric Ozone Assessment Report verwendet.",
+        proj2_title: "Optische Fehlererkennung", proj2_desc: "Industrielles Qualitätskontroll- und Fehlererkennungssystem unter Verwendung fortschrittlicher Computer-Vision-Techniken zur Identifizierung von Anomalien.",
+        proj3_title: "Kausal-gesteuertes Multi-Agenten-Handelssystem", proj3_desc: "Autonomes Multi-Agenten-Handelssystem mit kausaler Belohnungsformung. Ein kooperatives Fünf-Agenten-System (Makro, Sektor, Technisch, Stimmung, Risiko), das eine Sharpe-Ratio von 1,5 erreicht und Marktneutralität durch kausale GuV-Zuordnung gewährleistet.",
+        proj4_title: "Generative Kunst-Engine", proj4_desc: "Erstellung einzigartiger digitaler Kunst mittels GANs und Style Transfer. Ein kreatives KI-Tool, das künstlerische Stile mit neuronalem Rendering verbindet.",
+        proj5_title: "Autonome Drohnennavigation", proj5_desc: "Computer-Vision-System zur Hindernisvermeidung und Pfadplanung bei Quadrokoptern. Fähig zur Entscheidungsfindung in Echtzeit.",
+        proj6_title: "Echtzeit-ETL-Pipeline", proj6_desc: "Hochleistungs-Datenerfassungssystem, das 1M+ Ereignisse/Sekunde mit Kafka und Spark verarbeitet. Gewährleistet Datenintegrität und Echtzeitverfügbarkeit.",
         
         link_demo: '<i class="fas fa-external-link-alt"></i> Demo', link_code: '<i class="fab fa-github"></i> Code',
         contact_title: "Lass uns zusammenarbeiten", contact_desc: "Ich bin derzeit auf der Suche nach neuen Möglichkeiten im Bereich KI-Engineering. Schreib mir gerne!",
         btn_say_hello: "Hallo sagen", footer_credit: 'Entwickelt mit <i class="fas fa-heart" style="color: var(--accent-color);"></i> und Code.',
-        typing_text: ["Data Scientist", "KI-Ingenieur", "HPC-Spezialist", "Problemlöser"]
+        typing_text: ["Data Scientist", "KI-Ingenieur", "HPC-Spezialist", "Problemlöser"],
+        
+        btn_read_more: "mehr lesen", btn_read_less: "weniger lesen"
       }
     };
 
@@ -572,6 +646,18 @@
     function toggleMenu() {
         const nav = document.getElementById('navLinks');
         nav.classList.toggle('active');
+    }
+
+    // Read More Toggle Function
+    function toggleReadMore(btn) {
+        const cardContent = btn.parentElement;
+        cardContent.classList.toggle('expanded'); // Toggle class on the wrapper
+        
+        const isExpanded = cardContent.classList.contains('expanded');
+        const readMoreText = translations[currentLang].btn_read_more;
+        const readLessText = translations[currentLang].btn_read_less;
+        
+        btn.textContent = isExpanded ? readLessText : readMoreText;
     }
 
     function type() {
@@ -608,6 +694,14 @@
             btn.classList.remove('active');
             if(btn.textContent.toLowerCase() === lang) btn.classList.add('active');
         });
+        
+        // Reset Read More buttons text
+        document.querySelectorAll('.read-more-btn').forEach(btn => {
+            const wrapper = btn.parentElement;
+            const isExpanded = wrapper.classList.contains('expanded');
+            btn.textContent = isExpanded ? translations[lang].btn_read_less : translations[lang].btn_read_more;
+        });
+
         clearTimeout(typeTimeout); clearTimeout(eraseTimeout);
         typedTextSpan.textContent = ''; charIndex = 0; textArrayIndex = 0;
         textArray = translations[lang].typing_text;
