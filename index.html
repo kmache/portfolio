@@ -25,6 +25,8 @@
       --glass-bg: rgba(30, 41, 59, 0.7);
       --glass-border: rgba(255, 255, 255, 0.08);
       --gradient-text: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+      --error-color: #ef4444; /* Red */
+      --success-color: #22c55e; /* Green */
     }
     
     * { box-sizing: border-box; }
@@ -51,6 +53,37 @@
       background: var(--gradient-text); z-index: 2000;
       box-shadow: 0 0 15px var(--accent-color);
     }
+
+    /* --- NOTIFICATION POPUP (Dynamic) --- */
+    #notification-popup {
+        position: fixed;
+        top: -100px; /* Hidden initially */
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        padding: 16px 30px;
+        border-radius: 50px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        z-index: 3000;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transition: top 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255,255,255,0.1);
+        width: max-content;
+        max-width: 90%;
+        text-align: center;
+    }
+    
+    #notification-popup.show { top: 30px; }
+    
+    /* Styles for Success */
+    #notification-popup.success { background: rgba(34, 197, 94, 0.95); } /* Green */
+    
+    /* Styles for Error */
+    #notification-popup.error { background: rgba(239, 68, 68, 0.95); } /* Red */
 
     /* --- BACKGROUNDS --- */
     #star-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
@@ -154,19 +187,15 @@
     /* --- SECTIONS --- */
     section { padding: 100px 20px; max-width: 1200px; margin: 0 auto; }
     
-    .section-title { font-size: 2.5rem; margin-bottom: 20px; position: relative; display: inline-block; }
+    .section-title { font-size: 2.5rem; margin-bottom: 60px; position: relative; display: inline-block; }
     .section-title::after { 
         content: ''; display: block; width: 100%; height: 4px; 
         background: var(--gradient-text); margin-top: 8px; border-radius: 2px; 
     }
 
     .contact-subtitle {
-        color: var(--text-secondary);
-        font-size: 1.1rem;
-        margin-bottom: 50px;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
+        color: var(--text-secondary); font-size: 1.1rem;
+        margin-bottom: 50px; max-width: 600px; margin-left: auto; margin-right: auto;
     }
 
     /* --- ABOUT & SKILLS --- */
@@ -266,82 +295,56 @@
 
     /* --- CONTACT GRID LAYOUT --- */
     .contact-container {
-        display: grid;
-        grid-template-columns: 1fr 1.2fr;
-        gap: 50px;
-        background: var(--glass-bg);
-        border: 1px solid var(--glass-border);
-        border-radius: 24px;
-        padding: 50px;
-        position: relative;
-        overflow: hidden;
+        display: grid; grid-template-columns: 1fr 1.2fr; gap: 50px;
+        background: var(--glass-bg); border: 1px solid var(--glass-border);
+        border-radius: 24px; padding: 50px; position: relative; overflow: hidden;
     }
     
-    /* Left Column: Social Cards */
     .contact-left h3 { margin-bottom: 25px; color: white; }
     
     .social-card {
-        display: flex; align-items: center; gap: 15px;
-        padding: 18px 25px;
-        background: rgba(255,255,255,0.03);
-        border: 1px solid var(--glass-border);
-        margin-bottom: 15px;
-        border-radius: 12px;
-        text-decoration: none;
-        color: var(--text-secondary);
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
+        display: flex; align-items: center; gap: 15px; padding: 18px 25px;
+        background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
+        margin-bottom: 15px; border-radius: 12px; text-decoration: none;
+        color: var(--text-secondary); transition: all 0.3s ease; position: relative; overflow: hidden;
     }
-    
     .social-card i { font-size: 1.5rem; width: 30px; text-align: center; transition: 0.3s; }
     .social-card span { font-weight: 600; font-size: 1rem; }
     
-    /* Hover Effects & Brand Colors */
     .social-card:hover { transform: translateX(10px); color: white; border-color: rgba(255,255,255,0.2); }
-    
-    .social-card.linkedin:hover { background: rgba(0, 119, 181, 0.2); }
-    .social-card.linkedin:hover i { color: #0077b5; }
-    
-    .social-card.github:hover { background: rgba(255, 255, 255, 0.1); }
-    .social-card.github:hover i { color: white; }
-    
-    .social-card.twitter:hover { background: rgba(29, 161, 242, 0.2); }
-    .social-card.twitter:hover i { color: #1da1f2; }
-    
-    .social-card.youtube:hover { background: rgba(255, 0, 0, 0.2); }
-    .social-card.youtube:hover i { color: #ff0000; }
+    .social-card.linkedin:hover { background: rgba(0, 119, 181, 0.2); } .social-card.linkedin:hover i { color: #0077b5; }
+    .social-card.github:hover { background: #000000; border-color: white; } .social-card.github:hover i { color: white; }
+    .social-card.twitter:hover { background: rgba(29, 161, 242, 0.2); } .social-card.twitter:hover i { color: #1da1f2; }
+    .social-card.youtube:hover { background: rgba(255, 0, 0, 0.2); } .social-card.youtube:hover i { color: #ff0000; }
 
-    /* Right Column: Form */
     .contact-form { display: flex; flex-direction: column; gap: 20px; }
-    
     .form-group input, .form-group textarea {
-        width: 100%;
-        padding: 15px;
-        background: rgba(0, 0, 0, 0.2);
-        border: 1px solid var(--glass-border);
-        border-radius: 8px;
-        color: white;
-        font-family: 'Open Sans', sans-serif;
-        font-size: 0.95rem;
-        transition: 0.3s;
+        width: 100%; padding: 15px; background: rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--glass-border); border-radius: 8px;
+        color: white; font-family: 'Open Sans', sans-serif; font-size: 0.95rem; transition: 0.3s;
     }
-    
     .form-group input:focus, .form-group textarea:focus {
-        outline: none;
-        border-color: var(--accent-color);
-        box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
-        background: rgba(0,0,0,0.4);
+        outline: none; border-color: var(--accent-color);
+        box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); background: rgba(0,0,0,0.4);
     }
     
+    /* Valid/Success State */
+    .form-group input.input-success,
+    .form-group textarea.input-success {
+        border-color: var(--success-color) !important;
+        box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+    }
+    
+    /* Error State */
+    .form-group input.input-error,
+    .form-group textarea.input-error {
+        border-color: var(--error-color) !important;
+        box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+    }
+
     .form-group textarea { height: 120px; resize: none; }
 
     footer { text-align: center; padding: 40px; color: var(--text-secondary); font-size: 0.9rem; border-top: 1px solid var(--glass-border); margin-top: 80px; }
-
-    /* --- ANIMATIONS --- */
-    @keyframes floatImg { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-    @keyframes spin { 100% { transform: rotate(360deg); } }
-    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
     /* --- RESPONSIVE --- */
     @media (max-width: 992px) {
@@ -372,6 +375,12 @@
 
   <!-- Scroll Progress -->
   <div id="scroll-progress"></div>
+  
+  <!-- Dynamic Notification Popup -->
+  <div id="notification-popup">
+    <i class="fas fa-info-circle" id="popup-icon"></i>
+    <span id="popup-message">Message info</span>
+  </div>
   
   <!-- Background -->
   <canvas id="star-canvas"></canvas>
@@ -485,7 +494,6 @@
             <span class="mini-tag">LightGBM</span>
             <span class="mini-tag">CatBoost</span>
           </div>
-          
           <div class="project-links">
             <a href="#" target="_blank" rel="noopener noreferrer" data-i18n="link_demo"><i class="fas fa-external-link-alt"></i> Demo</a>
             <a href="https://github.com/kmache/ml_for_toar_station_classification" target="_blank" rel="noopener noreferrer" data-i18n="link_code"><i class="fab fa-github"></i> Code</a>
@@ -606,40 +614,24 @@
         <!-- Left Side: Socials -->
         <div class="contact-left">
             <h3 data-i18n="contact_connect">Connect with me</h3>
-            
-            <a href="#" target="_blank" rel="noopener noreferrer" class="social-card linkedin">
-                <i class="fab fa-linkedin-in"></i>
-                <span>LinkedIn</span>
-            </a>
-            
-            <a href="https://github.com/kmache" target="_blank" rel="noopener noreferrer" class="social-card github">
-                <i class="fab fa-github"></i>
-                <span>GitHub</span>
-            </a>
-            
-            <a href="#" target="_blank" rel="noopener noreferrer" class="social-card twitter">
-                <i class="fab fa-twitter"></i>
-                <span>Twitter</span>
-            </a>
-            
-            <a href="https://www.youtube.com/@nouncode-ai" target="_blank" rel="noopener noreferrer" class="social-card youtube">
-                <i class="fab fa-youtube"></i>
-                <span>YouTube</span>
-            </a>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="social-card linkedin"><i class="fab fa-linkedin-in"></i><span>LinkedIn</span></a>
+            <a href="https://github.com/kmache" target="_blank" rel="noopener noreferrer" class="social-card github"><i class="fab fa-github"></i><span>GitHub</span></a>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="social-card twitter"><i class="fab fa-twitter"></i><span>Twitter</span></a>
+            <a href="https://www.youtube.com/@nouncode-ai" target="_blank" rel="noopener noreferrer" class="social-card youtube"><i class="fab fa-youtube"></i><span>YouTube</span></a>
         </div>
 
         <!-- Right Side: Form -->
-        <!-- NOTE: You need to register at Formspree.io to get your own form ID. Replace 'YOUR_FORM_ID' below. -->
         <div class="contact-right">
-            <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="contact-form">
+            <!-- 'novalidate' disables browser default alerts -->
+            <form id="contact-form" action="https://formspree.io/f/xzzlgozz" method="POST" class="contact-form" novalidate>
                 <div class="form-group">
-                    <input type="text" name="name" required placeholder="Your Name" data-i18n-placeholder="form_name">
+                    <input type="text" name="name" id="form-name" required placeholder="Your Name" data-i18n-placeholder="form_name">
                 </div>
                 <div class="form-group">
-                    <input type="email" name="email" required placeholder="Your Email" data-i18n-placeholder="form_email">
+                    <input type="email" name="email" id="form-email" required placeholder="Your Email" data-i18n-placeholder="form_email">
                 </div>
                 <div class="form-group">
-                    <textarea name="message" required placeholder="Your Message" data-i18n-placeholder="form_message"></textarea>
+                    <textarea name="message" id="form-message" required placeholder="Your Message" data-i18n-placeholder="form_message"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-paper-plane" style="margin-right: 8px;"></i>
@@ -768,6 +760,127 @@
         btn.textContent = isExpanded ? readLessText : readMoreText;
     }
 
+    // --- FORM VALIDATION (REAL-TIME GREEN) ---
+    function validateInput(input) {
+        const value = input.value.trim();
+        let isValid = false;
+
+        if (input.name === 'email') {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            isValid = emailPattern.test(value);
+        } else {
+            // Name and Message: Valid if not empty
+            isValid = value !== "";
+        }
+
+        if (isValid) {
+            input.classList.add('input-success');
+            input.classList.remove('input-error');
+        } else {
+            input.classList.remove('input-success');
+            // Note: We don't add 'input-error' here to avoid annoying red flashes while typing.
+            // 'input-error' is added only on submit attempt.
+        }
+    }
+
+    // --- POPUP FUNCTION ---
+    function showNotification(message, type) {
+        const popup = document.getElementById('notification-popup');
+        const popupIcon = document.getElementById('popup-icon');
+        const popupMessage = document.getElementById('popup-message');
+        
+        // Reset classes
+        popup.className = '';
+        
+        // Add specific class
+        if (type === 'success') {
+            popup.classList.add('success');
+            popupIcon.className = 'fas fa-check-circle';
+        } else {
+            popup.classList.add('error');
+            popupIcon.className = 'fas fa-exclamation-circle';
+        }
+        
+        popupMessage.textContent = message;
+        popup.classList.add('show');
+        
+        setTimeout(() => {
+            popup.classList.remove('show');
+        }, 4000);
+    }
+
+    // --- FORM HANDLING ---
+    const contactForm = document.getElementById('contact-form');
+    if(contactForm) {
+        // Add Real-time Listeners
+        const inputs = contactForm.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('input', () => validateInput(input));
+            input.addEventListener('blur', () => validateInput(input));
+        });
+
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get Elements
+            const nameField = document.getElementById('form-name');
+            const emailField = document.getElementById('form-email');
+            const messageField = document.getElementById('form-message');
+            
+            // Validation Logic on Submit
+            let hasError = false;
+
+            // Check Name
+            if (nameField.value.trim() === "") {
+                showNotification("Please enter your name.", "error");
+                nameField.classList.add('input-error');
+                nameField.classList.remove('input-success');
+                hasError = true;
+            }
+
+            // Check Email
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(emailField.value.trim())) {
+                if(!hasError) showNotification("Please enter a valid email address.", "error");
+                emailField.classList.add('input-error');
+                emailField.classList.remove('input-success');
+                hasError = true;
+            }
+
+            // Check Message
+            if (messageField.value.trim() === "") {
+                if(!hasError) showNotification("Please enter a message.", "error");
+                messageField.classList.add('input-error');
+                messageField.classList.remove('input-success');
+                hasError = true;
+            }
+
+            if (hasError) return;
+            
+            // If valid, submit via fetch
+            const formData = new FormData(contactForm);
+            
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+                
+                if (response.ok) {
+                    showNotification("Thanks for your message! We'll get back to you very soon!", "success");
+                    contactForm.reset();
+                    // Remove green success borders after reset
+                    inputs.forEach(input => input.classList.remove('input-success'));
+                } else {
+                    showNotification("Oops! Service unavailable. Try again later.", "error");
+                }
+            } catch (error) {
+                showNotification("Network error. Please check your connection.", "error");
+            }
+        });
+    }
+
     function type() {
       if (textArrayIndex >= textArray.length) textArrayIndex = 0;
       if (charIndex < textArray[textArrayIndex].length) {
@@ -795,7 +908,7 @@
         currentLang = lang;
         localStorage.setItem('lang', lang); 
         
-        // Translate innerHTML elements
+        // Translate elements
         document.querySelectorAll('[data-i18n]').forEach(element => {
             const key = element.getAttribute('data-i18n');
             if(translations[lang][key]) element.innerHTML = translations[lang][key];
